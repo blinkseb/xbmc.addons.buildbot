@@ -60,6 +60,7 @@ set DL_DIR=%DEP_DIR%\scripts\download
 set LIB_DIR=%DEP_DIR%\lib
 set BIN_DIR=%DEP_DIR%\bin
 set INC_DIR=%DEP_DIR%\include
+set COPY_SCRIPT=%DEP_DIR%\scripts\copy_deps.bat
 
 if exist "%TMP_DIR%" rmdir "%TMP_DIR%" /Q /S
 if exist "%DL_DIR%" rmdir "%DL_DIR%" /Q /S
@@ -76,7 +77,13 @@ md "%INC_DIR%"
 echo Downloading dependencies...
 
 call "%current_path%\dlextract.bat"
-call "scripts\copy_deps.bat"
+
+REM don't trust the user. Save the current directory, and restore it as soon as the copy_deps script is done
+set saved_dir=%CD%
+
+cd "%TMP_DIR%"
+call "%COPY_SCRIPT%"
+cd "%saved_dir%"
 
 REM copy dependencies
 echo Copy dependencies...

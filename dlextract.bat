@@ -1,8 +1,6 @@
-@echo off
-
 set current=%CD%
 set DEP_FILE=%CD%\scripts\dependencies.txt
-cd %DL_DIR%
+cd "%DL_DIR%"
 
 for /F "eol=; tokens=1,2" %%f in (%DEP_FILE%) do (
   
@@ -13,7 +11,7 @@ for /F "eol=; tokens=1,2" %%f in (%DEP_FILE%) do (
   copy /b "%%f" "%TMP_DIR%"
 )
 
-cd %TMP_DIR%
+cd "%TMP_DIR%"
 
 for /F "eol=; tokens=1,2" %%f in (%DEP_FILE%) do (
   %ZIP% x %%f
