@@ -88,7 +88,7 @@ cd "%saved_dir%"
 REM copy dependencies
 echo Copy dependencies...
 
-if exist "%DEP_DIR%\dependencies.txt" (
+if exist "%DEP_DIR%\exclude.txt" (
   xcopy "%BIN_DIR%\*" "..\..\addon\" /E /Q /I /Y /EXCLUDE:"%DEP_DIR%\exclude.txt"
 ) else (
   xcopy "%BIN_DIR%\*" "..\..\addon\" /E /Q /I /Y
