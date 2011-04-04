@@ -51,4 +51,6 @@ REM Includes
 xcopy "include\curl\*" %INC_DIR% /E /Q /I /Y
 </pre>
 
+  If you want to exclude something from being copied, just provide a 'exclude.txt' file in the 'dependencies' folder. (see http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/xcopy.mspx?mfr=true for the /exclude parameter)
+
   Note: don't store *anything* in the dependencies folder, except the scripts folder. The 'lib', 'bin' and 'include' folders are automatically removed as soon as the build is completed.
