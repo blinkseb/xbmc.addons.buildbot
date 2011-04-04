@@ -6,21 +6,25 @@ set SLN="addon.sln"
 set RELEASE="Release"
 SET WGET="%current_path%\bin\wget"
 SET ZIP="%current_path%\bin\7za"
+set errorcode=0
 
 set addon_dir=%1
 if $%addon_dir%$ == $$ (
   echo Error: addon directory is missing.
+  set errorcode=1
   goto end
 )
 
 if not exist %addon_dir% (
   echo Error: addon directory does not exist.
+  set errorcode=1
   goto end
 )
 
 set output_dir=%2
 if $%output_dir%$ == $$ (
   echo Error: output directory is missing.
+  set errorcode=1
   goto end
 )
 
@@ -30,6 +34,7 @@ md "%output_dir%"
 cd %addon_dir%
 if not exist "windows" (
   echo Error: 'windows' directory is missing
+  set errorcode=1
   goto end
 )
 
@@ -43,6 +48,7 @@ if $"%VS100COMNTOOLS%"$ == $""$ (
   set VS="%VS100COMNTOOLS%\..\IDE\devenv.exe"
 ) else (
   echo Error: Visual Studio not found.
+  set errorcode=1
   goto end
 )
 
@@ -104,6 +110,7 @@ cd ..
 REM build project
 if not exist %SLN% (
   echo Error: %SLN% is missing.
+  set errorcode=1
   goto clean
 )
 
@@ -116,6 +123,7 @@ REM build the solution
 
 if errorlevel 1 (
   echo Error: compilation failed
+  set errorcode=1
   goto clean
 )
 
@@ -141,3 +149,5 @@ if not $%DEP_DIR%$ == $$ (
 
 :end
 cd %current_path%
+
+exit /B %errorcode%
