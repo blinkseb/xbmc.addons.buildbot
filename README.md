@@ -10,8 +10,8 @@ You can try the build script using:
 Rules
 =====
 - Addon directory must contains a "windows" subdirectory
-- Addon must be compilable with Visual C++ 2010 Express, and your solution must be nammed "addon.sln", and must reside in the "windows" folder.
-- The release build must be nammed 'Release'
+- Addon must be compilable with Visual C++ 2010 Express, and your solution must be named "addon.sln", and must reside in the "windows" folder.
+- The release build must be named 'Release'
 - No binairies in the repository. Dependencies will be downloaded automatically before building. See the 'Dependencies' subsection for more informations
 - Your solution must copy the final built dll to then 'addon' folder. You can use the 'Custom Build Step' in project properties, with a command line like that:
     - `xcopy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)..\addon\`
@@ -20,9 +20,9 @@ Rules
 
 Dependencies
 ============
-Since you can't have any binairies in the repository, you must provide a way to download them, either from your own repository or from the dependencie own website.
+Since you can't have any binairies in the repository, you must provide a way to download them, either from your own repository or from the dependency's own website.
 
-- You need a 'dependencies' folder in the 'windows' folder. When building, the script will look for a file nammed 'dependencies.txt', located in the 'scripts' folder (\windows\dependencies\scripts\). That file contains which dependencies need to be downloaded, with the following structure (';' are for comments) :
+- You need a 'dependencies' folder in the 'windows' folder. When building, the script will look for a file named 'dependencies.txt', located in the 'scripts' folder (\windows\dependencies\scripts\). That file contains which dependencies need to be downloaded, with the following structure (';' are for comments) :
 
 <pre>
 ; filename                              path
