@@ -58,7 +58,9 @@ xcopy "include\curl\*" %INC_DIR% /E /Q /I /Y
 
 Tests
 =====
-For automatic testing of the addon there must be a "test" directory in the root directory of the addon. Depending on the type of the addon (i.e. which extension point it provides) there are different tests applied.
+For automatic testing of the addon there must be a "test" directory in the root directory of the addon. Depending on the type of the addon (i.e. which extension point it provides) there are different tests to pass. For every test there must be a directory with the name of the extension point it tests in the "tests" directory. Every test is initiated by calling the "test.bat" script in that directory with the path to the addon that needs to be tested as a parameter. The "test.bat" must either return 1 if the test passed or 0 (with an errorlevel > 0) if the test failed.
+
+For different extension points there are different tests and every test has its own requirements which need to be met. The available tests and their requirements are:
 
 - xbmc.player.audiocodec:
   The "test" directory must contain at least a "test.reg" file which must contain two lines where the first line describes the parameters passed to the test application and the second line contains the path to the file to be checked and the MD5 checksum it should have. An example "test.reg" file could look like this:
