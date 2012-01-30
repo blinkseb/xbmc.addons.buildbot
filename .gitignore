@@ -1,0 +1,7 @@
+# global patterns
+output
+libs
+objs
+  
+# visual studio
+*.vcxproj.user
