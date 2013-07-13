@@ -6,6 +6,7 @@ set SLN="addon.sln"
 set RELEASE="Release"
 SET WGET="%current_path%\bin\wget"
 SET ZIP="%current_path%\bin\7za"
+SET GREP="%current_path%\bin\grep"
 set errorcode=0
 
 set addon_dir=%1
@@ -138,6 +139,42 @@ cd %current_path%
 
 xcopy "%dir%\*" %output_dir% /E /Q /I /Y
 
+REM check if there are tests to run
+set test_dir=%addon_dir%\test
+if not exist %test_dir% goto notests
+
+rem go through all the existing tests
+set tests_dir=%current_path%\tests
+set list_dir=dir
+set test_file=test.bat
+
+for /F "tokens=*" %%a in ('%list_dir% /b/a:d %tests_dir%') do (
+  rem check if the addon provides an extension point for the current test
+  for /F "tokens=*" %%g in ('%GREP% -i --regexp=%%a %output_dir%\addon.xml') do (
+    if %%g == "" goto notests
+
+    for /F "tokens=*" %%t in ('%tests_dir%\%%a\%test_file% %addon_dir%') do (
+      if errorlevel 1 (
+        echo %%a test failed!
+        if %errorlevel% geq 1 (
+          set errorcode=%errorlevel%
+        ) else (
+          set errorcode=1
+        )
+        goto clean
+      )
+
+      echo %%a test successfully passed
+    )
+  )
+)
+
+goto done
+
+:notests
+echo No tests for the addon found.
+
+:done
 echo All done.
 
 :clean
